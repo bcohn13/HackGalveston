@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Leaflet sample</title>
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+      <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+   </head>
+
+   <body>
+      <form action="/action_page.php">
+         <label for="fyear"></label><br>
+         <input type="text" id="fyear" name="fyear" value="year"><br>
+         <input type="submit" value="Submit" onClick=printYear()>
+       </form> 
+      <div id = "map" style = "width: 900px; height: 580px"></div>
+      <script>
+         let year;
+        function printYear() {
+         let year=document.getElementById("fyear").value
+         console.log(year)}
+      
+         const myRequest = new Request("products.json");
+
+        const lat_lon={'GALVESTON 6.4 NE, TX US':{"lat":29.28236,"lon":-94804984} ,'GALVESTON 3.6 WSW, TX US':{"lat":29.206723,"lon":-94.946477},
+       'GALVESTON SCHOLES FIELD, TX US':{"lat":29.27036,"lon":-94.86421}, 'GALVESTON 8.4 NE, TX US':{"lat":29.301657,"lon":-94.780869},
+       'GALVESTON 5.6 NE, TX US':{"lat":29.2767,"lon":-94.817}, 'GALVESTON 8.3 NE, TX US':{"lat":29.30144,"lon":-94.78169}}
+
+    
+      
+         let mapOptions = {
+            center: [29.3013,-94.7977],
+            zoom: 15
+         }
+       
+         // Creating a map object
+         let map = new L.map('map', mapOptions);
+         
+         // Creating a Layer object
+         let layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+         
+         // Adding layer to the map
+         map.addLayer(layer);
+         for (const name in lat_lon) {
+            L.circle([lat_lon[name].lat, lat_lon[name].lon], {color: 'yellow',
+                        fillColor: '#FFFF00',
+                        fillOpacity: 0.5,
+                        radius: 1000})
+                        .addTo(map)
+                        .bindPopup("Hi");
+                           };
+      </script>
+   </body>
+   
+</html>
